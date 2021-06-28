@@ -265,7 +265,7 @@
 
 	<a href="/2021/06/09/hello-Detection-1/" itemprop="url">
 		<time datetime="2021-06-09T10:24:10.816Z" itemprop="dateUpdated">
-	  		2021-06-09
+	  		2021-06-28
 	  </time>
 	</a> 
 
@@ -283,8 +283,347 @@
 		</div>
 
 		<div class="article-content" id="article-content">
-			<p>期末复习录屏总结</p>
-<h2 id="Chapter0"><a href="#Chapter0" class="headerlink" title="Chapter0"></a>Chapter0</h2><h2 id="Chapter1"><a href="#Chapter1" class="headerlink" title="Chapter1"></a>Chapter1</h2><h2 id="Chapter2"><a href="#Chapter2" class="headerlink" title="Chapter2"></a>Chapter2</h2><h2 id="Chapter3"><a href="#Chapter3" class="headerlink" title="Chapter3"></a>Chapter3</h2><h2 id="Chapter4"><a href="#Chapter4" class="headerlink" title="Chapter4"></a>Chapter4</h2><h2 id="Chapter5"><a href="#Chapter5" class="headerlink" title="Chapter5"></a>Chapter5</h2><h2 id="Chapter6"><a href="#Chapter6" class="headerlink" title="Chapter6"></a>Chapter6</h2><h2 id="Chapter7"><a href="#Chapter7" class="headerlink" title="Chapter7"></a>Chapter7</h2><h2 id="Chapter8"><a href="#Chapter8" class="headerlink" title="Chapter8"></a>Chapter8</h2><h2 id="Chapter9"><a href="#Chapter9" class="headerlink" title="Chapter9"></a>Chapter9</h2><h2 id="Chapter10"><a href="#Chapter10" class="headerlink" title="Chapter10"></a>Chapter10</h2><h2 id="Chapter11"><a href="#Chapter11" class="headerlink" title="Chapter11"></a>Chapter11</h2><h2 id="Chapter12"><a href="#Chapter12" class="headerlink" title="Chapter12"></a>Chapter12</h2><h2 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h2><h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2>	
+			<h2 id="Chapter0"><a href="#Chapter0" class="headerlink" title="Chapter0"></a>Chapter0</h2><ol>
+<li><p>   课程基本信息<br>为什么要学网络入侵检测、数字取证？<br>•    因为两者关系紧密，是网络安全体系中不可或缺的一部分。<br>•    我们现在有的技术：防病毒antivirus、防火墙firewall、DMZ（demilitarized zone，中文名称为“隔离区、防控access control”）都失败了<br>•    所以强调“纵深防御”（立体化防御-多层）的网络入侵检测系统-还有可能失败<br>•    所以继续用数字取证看它究竟造成了什么后果，抹除它产生的后果。<br>课程Part1网络入侵检测<br>•    构建一个完整的入侵检测系统（系统-各模块-技术）<br>•    开源的入侵检测系统Snort和Suricata<br>•    另一个入侵检测系统Zeek（Bro）<br>•    机器学习的手段在入侵检测中的应用（练习）<br>•    人工免疫系统<br>•    攻击手段的描绘：ATT&amp;CK,Kill-Chain,Attack Attribution<br>课程Part2数字取证<br>•    数字取证基本的组成部件<br>•    实时的数据收集（复杂）内存数据、硬盘数据、文件数据、注册表数据、源数据、系统的时间数据……搜集时不能干扰、覆盖，用专用工具完成；其中网络数据（特殊，与前面的入侵检测相关）<br>•    Windows、Linux的取证练习（练习，不是作业）<br>•    数据分析（用工具）</p>
+</li>
+<li><p>   网络入侵检测系统的历史（变化）<br>•    1980基于主机-用户行为建模<br>•    1986基于主机-用户行为建模<br>•    1998基于（报文的）规则（头部、负载的匹配规则）-商业化软件化大规模-Snort-轻量级开源的入侵检测防御系统，同时可以进行实时的流量分析、报文处理<br>•    1998Snort规则集-与攻击对应，需不断升级，可以盈利，30w/年；我们现在常用ET Rules（需准、快）<br>•    1999Zeek（Bro）-网络分析的框架，可以集成很多东西<br>•    2003入侵检测交换格式工作组<br>•    2010Open IDS战争带来了Suricata，使用规则集Bleeding Snort Rules<br>•    2020  IDS on Cloud ：流量的需求改变了<br>•    2020  IDS  in Cloud ：依存的环境变了</p>
+</li>
+<li><p>网络入侵系统的评估（好坏）-提前了解数据集<br>是否能有效地发现入侵：<br>•    入侵/警报-true postive、false negative、 true negative、false postive<br>•    假阳性+真阴性=1，假阴性+真阳性=1，希望TPR真阳性-&gt;100%,FPR假阳性-&gt;0%,但真阳性越高，假阳性也会更高<br>•    假阳性（误报率-花瓶）问题的严重性：<br>例题：70000 Events(报文/流/或其他的东西） 300 入侵 ；2800 警报（298真，2502假）</p>
+<pre><code> TPR 298/300=99.3%  检测率
+ FNR 0.7%
+ TNR 96.4%
+ FPR 2502/(70000-300)（误报率）=3.6%
+</code></pre>
+<p>•    评估网络入侵系统（IDS）的好坏：认证性的资质（性能、丢包、漏报）；研究领域（误报）<br>•    KDD 99：大数据的竞赛，会发布各数据集，但实际上是用的MIT 98数据进行的抽取。<br>•    好处：·做机器学习的人可以完全不理解网络安全的语义（有标签，有监督的训练方法）</p>
+<pre><code>   ·是攻击还是正常的访问-有准确的答案
+   ·标注完整，训练准确。
+</code></pre>
+<p>•    坏处：当时流量、协议类型、攻击类型基本上都不存在了。<br>•    Datacon：有的是真实数据，有的是红蓝对抗。清洗·匿名化放出来<br> Datacon已经举行了两年【安全分析竞赛】-暑假 也有二进制代码分析题【此课程+二进制课】</p>
+</li>
+</ol>
+<h2 id="Chapter-1"><a href="#Chapter-1" class="headerlink" title="Chapter 1"></a>Chapter 1</h2><p>网络入侵检测系统的结构【搭积木】</p>
+<ol>
+<li><p>怎么做NIDS<br>先用流量做一个镜像有镜像才是入侵检测系统，送过来做入侵检测系统，没镜像就是入侵防御系统# NIDS有点像模式识别</p>
+<ol>
+<li>采集数据</li>
+<li>分析处理数据（头部的分类；字符串\Regex的匹配）</li>
+<li>输出<br>·  挑战在什么地方</li>
+<li>流量的规模（决定了你的性能能否跟上处理）；</li>
+<li>多条线路</li>
+<li>敌人也知道你在看着他们，所以会使用逃逸攻击【不在你的规则里面了】、仿真攻击【encoding，让你看不出来我是坏人】、泛洪攻击【发大量报文使得你的警报被淹没，强制性大量触发你的规则，dos你的安全设备】的手段。</li>
+</ol>
+</li>
+<li><p>如何获取流量的镜像【镜像流量作为数据源，如何获取镜像流量？】属于环境准备的一部分，不属于入侵检测系统</p>
+<ol>
+<li>BPF 【软件方法】-BSD Packet Filter<br>在操作系统里面去镜像流量，做数据的检查。单机版。不影响干扰正常流量和攻击流量信息通信，不会断；不会对网卡有什么要求，不与驱动打交道，而是协议栈。<br>·有tap（做数据链路层所有（自上而下、自下而上）流量的复制给tap）<br>·有filter（各自）<br>Snort、Bro等都会有各种接口，其中就会有BPF<pre><code>      用户空间【应用】
+</code></pre>
+</li>
+</ol>
+<hr>
+<p> 内核【左】                   内核【右】：  协议栈</p>
+</li>
+<li><p>Port Mirror端口镜像【硬件方法1】<br>由于多链路（多个端口的流量）、有的是路由器不是主机，可以做一个端口的镜像（端口的监控）<br>粒度比较粗，不是基于ip，不是基于端口，可以选择单向进来、出去的流量或双向流量，将大量端口流量集中到一个。<br>·限制：<br>1） 一个交换机上只允许设两组Port Mirror，每组有一个Port Mirror，但有无数个源端口<br>2） 如果想复制监听，最多只能有两个输出。<br>3） 非常好配置，但全集中到一个端口的输入或输出，很有可能超出某个端口的限制<br>4） 可以用于入侵检测系统，但大多数只用于调试\应急,而且需要计算能力的消耗-负载高，Perfomance Penalty，很早的用法，现在很少用作IDS的流量</p>
+</li>
+<li><p>Beam Splitter分光【硬件方法2】<br>·物理上变成两束光，但强度不同（可以通过调节镜子实现2：8）：一部分继续不变的传，正常通信，另一部分作数据源，对交换机性能没有负担影响（物理上分的，而不是消耗交换机资源去复制报文）；两者强度不同，内容一样<br>·现在大部分会采取这种方法<br>·但对光的强度有要求。不能太低（信号太弱），不然设备无法启动，所以需要距离比较近。<br>·work only for filter<br>挑战：<br>1.流量的规模（决定了你的性能能否跟上处理）；<br>2.多条线路</p>
+</li>
+<li><p>SDN Switch【硬件方法3】（有两种工作模式）<br>·怎样将多链路的流量聚合<br>·怎样过滤超大不必要流量（根据ip、端口、黑名单白名单）<br>·怎样balance到不同端口，同一个会话的流量需要在一个端口<br>·使用的是流表项，不像传统路由器只有路由表<br>·match-action【丢弃、输出、修改（ip头等）】<br>·通过流表项，指定output到xx端口上<br>·支持复制，同时输出到多个端口<br>·可以做普通交换机，加上了了流表项也可以看成增强型的Port Mirror<br>·有成本的，不够贵只能先分光。</p>
+</li>
+<li><p>TAP\NBP Switch 专门定制的SDN Switch【硬件方法】<br>·访问点\汇聚点的测试交换机，网络报文的代理器，汇聚分流器<br>·解决了多链路、大流量的问题<br> Balance\流量filter\流量修改<br>·同时实现了流量的复制<br>·Tunnel的处理（多用于数据中心内部），解隧道报文</p>
+</li>
+<li><p>FPGA【硬件方法-专有硬件平台，增强预处理过程】:</p>
+</li>
+<li><p>Multi-Core Platform【硬件方法-专有硬件平台，增强预处理过程】:<br>·做流量的加速的预处理过程，包的分类<br>·模式match<br>·计数，flow counting<br>·Fast path：快速分类、match，大流量、视频、文件下载</p>
+</li>
+<li><p>如何从系统获取报文【以方法、体系为主，细节不展开，等讲到具体Snort系统再展开】<br>·当我们的设备获取到流量以后，软件如何拿到流量中的报文？<br>最基本的方法：BPF   （ Snort的缺省办法），但在高性能下没办法正常工作，因为比较慢：<br>①需要发送中断（资源占用，处理能力可能下降到个位数），操作系统才知道有报文，进入协议栈（当报文每秒很多时可能陷入死锁）、<br>②每个报文需要通过系统调用进行用户态、内核态的切换、<br>③需要进行多次内存拷贝<br>所以取报文不能按正常协议栈方式走，太慢了。<br>解决方法：<br>·轮询模式（无中断、无系统调用），在报文很多很繁忙的情况下很不错；但报文少的时候会加重CPU的负担<br>·零拷贝：DMA（不经过CPU的干预）（两大开源：DPDK【把所有东西放到用户态去做，绕过了协议栈，坏处是绕出了又没有实现协议栈，所有的通信都不能做了】；EDP【在kernel做，加了一层eBPF，快速传递报文，加强报文过滤】）</p>
+</li>
+<li><p>分析的对象是什么【拿到报文以后，入侵检测系统分析的对象是什么？单位是什么？】-对象不同，评估单位也不同，越往上，数量就越小<br>（1）报文packet<br>最简单、最高效的方式，不需要维持状态、不需要内容缓存，Zeek没有这个层次。如果可以接受一定的误报、漏报率的话。但容易受到分片攻击。也不能做统计类的信息检测。<br>（2）Flow层次<br>与报文检测是结合在一起的；做状态、做统计，但没有缓存，不可以防止分片攻击【一种逃逸手段，分片攻击可以躲开不进行报文重组的IDS检测】；可以防止SYN  Flood（ddos）【主要通过对宿IP的报文进行数量统计来进行检测】攻击。<br>（3）Stream层次<br>比报文、Flow都有力，都慢，消耗内存更多，做状态、做统计，有缓存，所以可以防止分片攻击，但解决不了encode（编码过）的问题，检测不到。<br>（4）Decoded Stream 层次<br>最有力、最慢，做状态、做统计，有缓存，可以防止分片攻击，解决了encode的问题。可以防止（SQL注入+SQL参数复杂编码）的攻击。<br>（5）聚合 Stream 层次<br>·为什么如此复杂，不只在报文层次做这件事？<br>①了解你的敌人，针对漏报、误报：他们会将内容分割在不同包里，重叠覆盖（歧义）、乱序、加密内容（SQL注入加引号）……<br>–sql注入难以通过原始二进制特征来进行检测–<br>·如何处理百万级的警报？<br>-为什么会出现？①一个攻击触发多个警报②一个攻击有多个步骤③聚合和关联（多个，但是其实可以聚成一个，尽可能削减数量，知道就是一个攻击，这样的警报才有价值）<br>·警报输出到哪里？<br>File（我们做实验中，原始二进制快速，或好看的txt文本格式）、Unix Socket（本机内两个进程的）、Socket（网络上的，将我们的警报发到一个后端的系统去处理）<br>·警报中需包含什么信息？源地址、目的地址</p>
+<p>扩展阅读：高性能网络处理</p>
+<ol>
+<li>   Suricata Extreme Performance Tuning</li>
+<li>   SEPTun Mark Ⅱ</li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-2"><a href="#Chapter-2" class="headerlink" title="Chapter 2"></a>Chapter 2</h2><p>如何安装和管理Snort？<br>    有完整安装版，但是也可以自己装。（由此介绍linux开源软件在下载和安装中所需要的问题。）linux系统下，下载安装一种是二进制方式，一种是源代码的方式。<br>•    自动下载：</p>
+<ol>
+<li>   ctrl+alt+T</li>
+<li>   Sudo apt-get install snort</li>
+<li>   配置监听端口的话：ifconfig看最前面那个英文单词是啥就打上去。</li>
+</ol>
+<p>•    手动下载：<br>•    登录snort官网，进入downloads，下面source中的snort-2.9.15.1.tar.gz右键复制链接地址，<br>•    cd soft/<br>•    wget 刚刚复制的<br>•    得到一个压缩包<br>•    md5sum nort-2.9.15.1.tar.gz（算一下md5码，与官网比对）<br>•    tar -zxvf snort-2.9.15.1.tar.gz解包</p>
+<p>–tar：没有压缩，只是打包–直接x就行；tar.gz：压缩、打包–要zxvf–<br>•    INSTALL文件 或doc文件（vi 打开 INSTALL（无后缀））会告诉你你该怎么安装<br>升级：最好先卸载；依赖库libdnet【构造包、发包用的（主要reject）】libpcap【抓包用】libpcre【正则表达式匹配】本身不是snort的，但是它要用； zlib【压缩】<br>•    根目录下./configure【自动的生成makefile】（确定所有文件的编译和他们之间的依赖关系，探测环境，看看路径在哪里，这就是configure完成的，探测版本、参数等）<br>•    make命令，【编译链接】<br>•    Make install【安装】<br>•    rule【规则】<br>Src/snort -c etc/snort.conf -T<br>•    Snort -?看所有可以执行的命令<br>•    有用的命令：history（markdown也可以记录，等到再做实验就可以重复这个过程）<br>•    做第一遍缺的包，第二遍要记住，减轻一些麻烦<br>•    完成了编译环节，产生了一个能用的snort。<br>•    snort.conf里面的九个功能：<br>    1.    设置网络变量<br>    *规则头部里面的端口和ip地址<br>    *针对ip地址的定义：入侵检测系统中最关键的：HOME_NET、 EXTERNAL_NET、以及其他的如DNSSERVER等，针对规则集而言，越精确，误报率、符合要求的就越多<br>    *针对端口的定义：HTTP_PORTS【针对提供HTTP服务的端口】如果不在这里定义，那么在那个规则里就得写一堆端口；AIM_SERVERS【特定的服务器】；黑名单、白名单；<br>    <em>规则的位置../rules<br>    2.    配置decoder<br>    3.    配置基本检测引擎<br>    4.    配置动态加载库<br>    5.    配置预处理器<br>    6.    配置输出的插件<br>    7.    自定义你的规则集#snort需运行哪些规则<br>    注释是#<br>    不同的规则会组合在不同的文件里<br>    8.    个性化你的预处理器和规则集<br>    9.    定制so rule<br>一、规则的描述：<br>    头部【简单：rule类型+五元组】+选项【General • Non-Payload • Payload • Post-Detection】匹配/非匹配/命中后操作；负载：应用层报文的内容；……<br>    1.    rule类型：<br>    •    alert(包含log功能)得到警报（信息有限）、报文<br>    •    log报文<br>    •    pass：白名单<br>    •    Drop（包含alert）<br>    •    Reject（主动）<br>    •    sdrop（ 阻止数据包但不记录它，silent drop，没有alert）<br>    /</em><br>    1. alert - generate an alert using the selected alert method, and then log the packet<br>    2. log - log the packet<br>    3. pass - ignore the packet<br>    4. activate - alert and then turn on another dynamic rule<br>    5. dynamic - remain idle until activated by an activate rule , then act as a log rule<br>    6. drop - block and log the packet<br>    7. reject - block the packet, log it, and then send a TCP reset if the protocol is TCP or an ICMP port unreachable<br>    message if the protocol is UDP.<br>    8. sdrop - block the packet but do not log it.<br>    */<br>    如果Snort作为检测系统IDS用，没有任何拦截的功能，那么只有Alert（发出警报+记录报文）、log（仅记录报文）、pass（不做任何事）<br>    如果Snort作为IPS用，那么除了上述三个功能之外，还有drop（丢弃，不做响应）、reject（丢弃+断了）、sdrop（silent drop，没有响应，不做记录，但不会断联）</p>
+<pre><code>2.    五元组：
+五元组是: 源IP地址、目的IP地址、协议号、源端口、目的端口
+</code></pre>
+<p>•    协议：TCP/UDP/ip/icmp（最粗的分类，和规则集分类有关，内部规则集检测的时候分成这四棵树去检测，别的协议也有办法支持（non-payload））<br>•    ……【协议号】<br>•    IP【源IP地址、目的IP地址】ip地址可以用any定义任何地址，并且需要添加掩码（16-B类，24-C类，32-特定的机器），并且可以使用！操作符。如果ip地址是个列表，需要[192.168.1.0/24,10.1.1.0/24]类似，使用[],中间用逗号隔开，如果要加！，要加到[]外部。<br>•    源/目的端口【源端口、目的端口】（Snort比较重视端口而不是ip）any表示全部，如果表示范围，eg：1：1024，中间用冒号隔开。但是：200也可，表示小于等于200的，反之：1024：表示大于等于1024的。当然也可以类似ip地址使用！否定操作符。<br>    可能还有(方向操作符。规则所施加的流的方向. 单向，从源到目的 -&gt;; 双向，既是源又是目标&lt;&gt;.)</p>
+<pre><code>3.    通用选项 
+nids的核心，所有选项用“；”隔开，规则选项关键字和他们的参数用“：”分开，snort中有42个规则选项关键字（老版本，新版本要多很多）
+</code></pre>
+<p>•     Msg   这个规则要报警的信息是什么？msg - 在报警和包日志中打印一个消息。<br>•     Reference  这个规则相关的参考信息在哪？reference - 外部攻击参考ids。<br>•     gid/sid/rev gid缺省是1，sid - snort规则编号id是不变的，1-1000保留，1000-99999官方发布规则，100w+自定义规则。 rev - 规则版本号。<br>•     classtype   classtype - 规则类别标识。【给机器看】也会定义优先级（隐含一个priority）<br>•     priority  priority - 规则优先级标识号。【给机器看】显式的，重要性<br>•     metadata  元数据（Metadata），又称中介数据、中继数据，为描述数据的数据（data about data），包括修改信息等，主要是描述数据属性（property）的信息<br>    logto - 把包记录到用户指定的文件中而不是记录到标准输出。<br>    ttl - 检查ip头的ttl的值。<br>    tos 检查IP头中TOS字段的值。<br>    id - 检查ip头的分片id值。<br>    ipoption 查看IP选项字段的特定编码。<br>    fragbits 检查IP头的分段位。<br>    dsize - 检查包的净荷尺寸的值 。<br>    flags -检查tcp flags的值。<br>    seq - 检查tcp顺序号的值。<br>    ack - 检查tcp应答（acknowledgement）的值。<br>    window 测试TCP窗口域的特殊值。<br>    itype - 检查icmp type的值。<br>    icode - 检查icmp code的值。<br>    icmp_id - 检查ICMP ECHO ID的值。<br>    icmp_seq - 检查ICMP ECHO 顺序号的值。<br>    content - 在包的净荷中搜索指定的样式。<br>    content-list 在数据包载荷中搜索一个模式集合。<br>    offset - content选项的修饰符，设定开始搜索的位置 。<br>    depth - content选项的修饰符，设定搜索的最大深度。<br>    nocase - 指定对content字符串大小写不敏感。<br>    session - 记录指定会话的应用层信息的内容。<br>    rpc - 监视特定应用/进程调用的RPC服务。<br>    resp - 主动反应（切断连接等）。<br>    react - 响应动作（阻塞web站点）。<br>    uricontent - 在数据包的URI部分搜索一个内容。<br>    tag - 规则的高级记录行为。<br>    ip_proto - IP头的协议字段值。<br>    sameip - 判定源IP和目的IP是否相等。<br>    stateless - 忽略刘状态的有效性。<br>    regex - 通配符模式匹配。<br>    distance - 强迫关系模式匹配所跳过的距离。<br>    within - 强迫关系模式匹配所在的范围。<br>    byte_test - 数字模式匹配。<br>    byte_jump - 数字模式测试和偏移量调整</p>
+<pre><code>在2.9的mannal中把它们分为了4类：
+general ：These options provide information about the rule but do not have any affect during detection对检测无影响
+payload ：These options all look for data inside the packet payload and can be inter-related需要深入到包中的数据。
+non-payload： These options look for non-payload data不需要包数据。
+post-detection ：These options are rule specific triggers that happen after a rule has “fired.”触发器，只有当一个规则触发后才发生。
+4.    Non-Payload （非负载），也即除去头部剩下的字段，特点是基本都是定长的字段
+•    dsize
+•    ttl
+•    tos
+•    …… 
+More on Rule of Snort
+•    流里面有： to_client,to_server,established 流本身的状态、方向，可以提高拦截准确率
+•    流比特位【合在一个流里面，用一个比特位标记】里面有：set,unset,isset,noalert
+    Payload
+•    content：固定的字符串，我要找这么一个字符串，多个content可以合并成一个pcre，一个规则里可以有多个content。
+content modifier：在什么地方找这个字符串：depth（最多找到payload的第xx个字节）、offset（找寻的起点，从第xx字节开始找）、distance（如果有多个content的话，可以用distance表示，找到第一个字符串后隔多远再找第二个字符串）
+•    pcre：是一个正则表达式，可以很复杂，是个固定的模式，但不是固定的字符串，和Zeek不兼容。
+rule之外的Filtering：警报太多怎么办，Snort提供三种机制
+•    rate filtering（根据事件的速度，如每秒100个警报，对事件采取新的动作）,
+•    event filtering(不去改变action，减少事件警报，如：100个事件限制只能报1个，1s限制报1个等)
+•    event suppressing（对于特定目标，直接限制，不让它报）
+</code></pre>
+<p>二、Snort的预处理器<br>分类：5类</p>
+<ol>
+<li>   检测：<br>•    sfportscan（基于端口的统计来做基于源|宿端口检测，单报文做不了：TCP\UDP\IP，有三种情况：one-one我访问它很多端口，一对一就能发现；many-one我和别人1000个ip都同时访问你5个端口 ，分布式的扫描，每个人看上去都是正常的，但基于宿来统计就可以发现问题；one-many扫描很多机器的一个端口，基于源来统计）、reputation（<br>•    黑白名单（Reputation）</li>
+<li>   原来就是一个rule里面的比对IP，但是后来发现效率较低。就改成了这个Reputation独立出来</li>
+<li>   用route table 形式实现）</li>
+<li>   检测对象的重组（含检测）：frag3（做ip层的重组，比如ip报文分片放到了不同报文里去混淆，也能被匹配中）、session（为每个流建立上下文结构，如flow、flowbits，缺省是TCP，也可以是UDP，ICMP,IP，缺省情况下tcp session count为256k，最大1M）&amp;stream5（传输层处理，有状态上的消耗，以流为检测对象，基于负载内容重组，而不是提供上下文。基于策略处理。解决检测中发现的一些异常。应用层协议基于它对再做后面的解码。）</li>
+<li>   解码&amp;检测：http、smtp、pop3、dns、…</li>
+<li>   整个Snort的管理：Performance monitor</li>
+<li>   重写报文（只有IPS做)：normalizer<br>管理：performance monitor 去解决问题。</li>
+</ol>
+<p>三、如何检测入侵检测系统<br>使用Scapy进行，Scapy本身是一个python程序，作为测试，可以发、监听、检测、构造报文，是一个交互式网络实验工具</p>
+<p>例题： 从软件源代码包安装Snort软件，编译时依赖的软件包括（1234）<br>1.libpcap 2.libdnet 3.libpcre 4.zlib</p>
+<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><p>一、Suricata（开源软件）的简介</p>
+<ol>
+<li>含义：<br>suricata的原意：一只沙漠上四处放哨的小动物;<br>此处对自己的定义：IDS（入侵检测系统）、IPS（入侵防御）【与IDS相比，加上一个对报文的截断和修改，只在输出上有点区别】、NSM（不单纯基于规则去检测，还对网络进行监控）</li>
+<li>开发者：<br>OISF基金会（open information security foundation），非盈利组织。<br>OISF的成员：<ol>
+<li>   FireEye(主要做软件安全)、proofpoint（做规则集的）；</li>
+<li>   alien vault（常规的，做入侵和安全态势感知，做安全产品，对应天融信）、anssi（专门出标准的）、verizon（美国的大运营商）、Juniper networks（造路由器的）、IronNet（民间做到大）、Bricata、Red Piranha、cylera、greycortex、Indegy、unify（做网管的）</li>
+<li>实现了一套完整的规则语言：和Snort近似但不完全相同。（包含另外的关键字；同样的关键字含义也可能不同）Suricata里面没有预处理器，整体程序结构也跟Snort不同，有自己扩展的部分。</li>
+<li>检测流量异常：除了做规则检测，还可以检测流量异常（相当于在做流和协议解码），与Snort类似</li>
+<li>规则集：除使用官方规则集外，还可以使用定制的第三方规则集（VRT）。</li>
+</ol>
+</li>
+</ol>
+<p>二、Suricata与Snort的不同之处<br>1.协议的识别<br>    Suricata加入了自动化检测的功能：<br>    Snort需要指定端口，这样就能判断协议；如：alert tcp $HOME_NET any -&gt; $EXTERNAL_NET $HTTP_PORTS …<br>    Suricata除了可以指定端口判断协议外，也可以不指定端口,自动识别stream协议的类型;如：<br>    alert http $HOME_NET -&gt;EXTERNAL_NET any …<br>    Suricata还可以指定在什么协议下适用，如果不是这个协议本条规则就不适用，如：<br>    alert tcp $HOME_NET any -&gt; $EXTERNAL_NET any(app-layer-protocal:http;…)<br>2.关键字<br>    新增的协议：new tls*;dns_Query<br>    新的：http_user_agent,http_user_agent,http_host,http_content_type<br>    Snort里面有，但意义不同或增强：byte_extract,isdataat,pcre<br>3.事件系统<br>    和Snort不同，但和Bro、Zeek相像的地方：不仅输出结果，中间这些东西也会输出，可以再去分析。<br>    events:alerts、anomalies、metadata、file info、protocol specific records<br>    用json形式发给file、unix_socket、redis、syslog<br>4.规则的扩展<br>    lua 脚本语言（nmap、”文明”都用过）<br>    在输出、检测时可以用，用lua做比较复杂的匹配<br>    init function:定义你要对哪一部分进行匹配，如：要求对http的request_line进行匹配。<br>    function init(args)<br>    • local needs = {}<br>    • needs[“http.request_line”]=tostring(true)<br>    • return needs<br>    end<br>    match function<br>    match object:packet（整个的）、payload（packet里面的一个）、buffer、http field<br>5.多线程性能的优化<br>    Suricata充分利用多核线程。<br>    两种运行模式：工作者模式（从头到尾做下来,Worker Model）、自动流固定模式（捕获线程-根据哈希交付线程即重组线程,Autofp Model）<br>    CPU亲和性的限制：在高速处理下，cache（指令、数据）的失效会造成性能的大大降低。所以最好固定在一个CPU上；不同任务最好在不同CPU上运行。有management、receive、worker三种cpu set。<br>    –inclusive，绑定在CPU上；<br>    –balance：在各CPU上跳来跳去运行。<br>6.高性能的Payload（负载）匹配：关键技术<br>    负载（payload）含有：content、regince（？）、正则表达式<br>    怎样快速做负载匹配？<br>    最简单的办法就是单pattern的匹配算法-BM，但规则数量大的时候不能这么做<br>    还有一个办法是多pattern的匹配算法-MPM，一次性即可<br>    Snort中，就是根据端口号来分。<br>    Suricata中，根据signature、group tree（把IP也作为分类依据，tcp还分方向）<br>    哪一个特征是最重要的？一个规则中可以有多个content，如何做匹配？<br>    Snort&amp;Suricata中都给出了回答：选一个content作为最重要的、最先进行分类的（fast pattern）。<br>    如果匹配中了，再对剩下的特征（pattern）去匹配。<br>    怎样选择？手工指定或机器自动指定。<br>    （Snort中，指定最长的作为fast pattern，Suricata里，比较复杂，如下）。<br>    Suricata对fast_pattern的选择：<br>    1.最高优先级<br>    2.最长内容<br>    3.pattern strenth，熵（字节离散程度）<br>    4.buffer list id，最后一个<br>    5.第一个<br>目前在入侵检测中最快的匹配软件：Hyperscan<br>    快速的多特征正则表达式软件，专门针对现代CPU进行改进。<br>    它指出：Suricata等软件人工指定Fast_pattern不准确、匹配过程是重复的、越长NFA越复杂，效率越低、匹配算法慢……<br>解决方案：用自己指定的不用人工的；提出有效的匹配算法；基于bit的NFA技术，不会越长越复杂<br>流程：<br>    特征集合拆分（compile）成特征数据库，特征数据库通过Scan（Stream mode、Block Mode、Vector Mode）成报文/流负载，最后得到匹配结果。</p>
+<h2 id="Chapter-4"><a href="#Chapter-4" class="headerlink" title="Chapter 4"></a>Chapter 4</h2><p>一、Zeek的简介<br>1.含义：<br>NSM(Network Security Monitor，开源网络监控工具），又称为Bro<br>2.开发者：<br>Vern Paxson，1995年写下第一行代码。（Snort往商业化发展，而Zeek一直致力于实验室中），做过代码混淆比赛，成立了CESR（Center for Evidence-based Security Research）<br>3.使用者：<br>LBNL、CERN、Universities</p>
+<p>二、Zeek的架构<br>1.早期单机架构：<br>Network + libpcap + Event Engine + Policy Script Interpreter<br>2.进化版本：<br>Network + Dynamic Protocol Detection(libpcap演变而来) + Event Engine + Policy Script Interpreter+一台机器扩展到多机处理（比Suricata扩展更灵活）<br>策略与机制相分离，输出日志文件有非常多种类型。</p>
+<p>三、Zeek脚本语言</p>
+<ol>
+<li><p>   基于python，并不是python。</p>
+</li>
+<li><p>不存在main函数，是从event进入的,event是进入点。<br>event zeek_init()<br>{<br> local s: string =”Hello World!”; #局部变量，名字为s<br> print s;<br>}</p>
+</li>
+<li><p>   注意，冒号后面跟着类型。</p>
+</li>
+<li><p>   所有代码后面都要跟一个分号结尾。</p>
+</li>
+<li><p>Zeek的数据类型：<br> a. 常见类型：String、int、Double、Bool；<br> b. 数据结构：table：字典；set：集合；vector：数组；record：类<br> c. NMS 类型：port：80/tcp,53/udp、addr：1.2.3.4、subnet：192.168.0.0/16，（这些都是关于网络的）</p>
+</li>
+<li><p>   举例：</p>
+<h2 id="Chapter-5"><a href="#Chapter-5" class="headerlink" title="Chapter 5"></a>Chapter 5</h2><p>—— Zeek的深入探讨</p>
+</li>
+<li><p>Event的触发：</p>
+<p> 没有返回值；<br> 通过Zeek 引擎抓包传参；<br> 一个Event可能有多个处理实例（应对同一个事件，可能有不同的处理方法）</p>
+</li>
+<li><p>Zeek的运行流程：<br>zeek_init()</p>
+</li>
+</ol>
+<p>-&gt;读报文，直到读到了new_connection()(一个connection就是一个五元组，源、宿地址；源、宿端口；在某个协议上所有的报文序列，如果其中一个变了那就是新的connection)<br>-&gt;http_request（解析语义结构，发现是http协议请求）<br>-&gt;http_header(不停循环地读，拿到了header啥的直到全部读完)<br>-&gt;htto_begin_entity<br>-&gt;http_entity_data(循环)<br>-&gt;http_end_entity<br>-&gt;http_reply<br>-&gt;http_header(循环)<br>-&gt;……本次浏览结束，<br>-&gt;connection state remove<br>-&gt;zeek_done<br>3.Zeek中重要的Event：<br>Zeek Start: zeek_init<br>Zeek Stop: zeek_done<br>Connection:new_connection(首个连接的包，即五元组改变了的包；是双向的)、connection_state_remove<br>（本章为对Zeek的深入探讨，具体可以分析Zeek运行流程和代码，考前纸质已整理。由于考试结束，暂未线上整理）</p>
+<h2 id="Chapter-6"><a href="#Chapter-6" class="headerlink" title="Chapter 6"></a>Chapter 6</h2><p>一、入侵检测中机器学习的基本常识<br>#机器学习在入侵检测中需要综合素质</p>
+<p>概念区分：①机器学习中的入侵检测  ②基于机器学习的入侵检测<br>①检测针对机器学习算法或模型的攻击（比如对抗网络） ②还是传统的入侵检测，但是使用机器学习的方法<br>机器学习的两种方法：聚类（用途1.为分类做准备；用途2.找到奇异点）、分类（更好用，完全没有领域知识的人也能做）<br>机器学习中的数据类型：<br>类别数据（Category）：HTTP Request type ;API call type;User Behaviors<br>二元组（Binary）：True/False（land）<br>序数（Ordinal）：自然数，作差是没意义的，比如IPv4的tos字段和IPv6的traffic class字段，比如优先级，1-100<br>数值（Numeric）： </p>
+<p>机器学习的准备工作：</p>
+<ol>
+<li>数据清洗（数据中可能有漏、错，需补充）<br>错：可能算法没写对，所以错了。例如：算测量一个tcp流，算TCP data的size，算出传输数据的大小；但如果传了一个特别大的文件，会发生反转（得到一个负数、更小的数），而不是得到正常的值；<br>缺失——恶意报文，或本来就没收到</li>
+<li>数据整合（数据在机器学习中可能有很多维度，需要整合起来）<br>如Zeek中有很多日志，但真正做机器学习的时候可能要将http.log、conn.log、file.log拼起来；或将传输层、应用层、文件属性拼在一起，才能做一个比较完整的属性集合；还有DNS查IP时要整合地理归属属性</li>
+<li>   数据归约（哪一个数据比别的数据更重要）</li>
+<li>数据转换（原生数据-&gt;统计数据-&gt;语义数据）<br>基于机器学习的入侵检测有很多问题缺点</li>
+<li>   实际上，基于规则的结果很好，基于统计的规则很差，而且一直得不到解释</li>
+<li>   安全分类错的代价太高，而不是图片识别不出就识别不出。</li>
+<li>   检测的语义无法解释，调查处理成本很高。</li>
+<li>   机器学习一般都是查相似性，但这里要异常检测。</li>
+<li>   图像识别是静态的，而流量啥的每天都在变化，是动态的。要不断更新才行。</li>
+<li>   没办法很好的评估。</li>
+<li>需要在一个敌对的环境中去运行。<br>二、“数据包、系统调用、行为”等数据类型都可以用来做机器学习</li>
+<li>   数据包：KDD 99是唯一公开有良好标注的入侵检测数据集。</li>
+<li>   系统调用：count of api_name, call_pid(进程号), exInfo</li>
+<li>行为：Email、Printer、File、Group、Login、URL、ratio<br>三、怎样用机器学习来检测</li>
+<li>   fast-flux Domain：短时间，很多IP地址</li>
+<li>scikit-learn的训练数据类型：<br>不同的特征：实际上是二位数组的形式；<br> 标签（每一个数据对应哪个类）：是list的格式</li>
+<li>   sfas</li>
+</ol>
+<h2 id="Chapter-7"><a href="#Chapter-7" class="headerlink" title="Chapter 7"></a>Chapter 7</h2><p>入侵检测中的人工免疫系统<br>一、HIS（human immune system）、AIS（artificial immune system）<br>①人的免疫系统：组织、细胞、器官形成的网络，作用：感知有害，触发特殊细胞释放至特定地点，避免病菌侵入<br>分类一：<br>第一道防线：皮肤、角膜、肺、消化系统<br>第二道防线：淋巴系统（Lymphatic System）如感冒喉咙痛<br>第三道防线：抗原（免疫系统可以识别的标记）-抗体：更灵活【先天性免疫、这是后天性免疫】<br>B细胞：触角匹配是否异物抗原，如匹配到就像拼图一样结合【模式匹配】<br>T细胞：需和树突细胞合作，判断当下环境自身是否该被激活<br>抗体的产生：产自骨髓，在胸腺组织里学习不能攻击自身，没学完不让它出去【只学好的】<br>②人工免疫系统：防火墙、杀毒软件、滥用检测、事件监控、异常事件检测<br>③两者相似性：<br>1.都是处理动态的环境，情况越来越复杂多变<br>2.目标都是保护宿主<br>3.层次上都是多层次的<br>•    皮肤-防火墙<br>•    先天性免疫-杀毒软件<br>•    获得性免疫-异常检测<br>4.方法都是学会排除异己（非我）<br>④两者区别：<br>•    每个人都是不同的，人的免疫系统不同（先天免疫相同，后天免疫不同），但windows、linux系统都是相同的， 后天免疫也基本相同。<br>•    几乎每个系统中都只安装了少数安全软件<br>•    在互联网上病毒的传播速度比在人体快</p>
+<h2 id="Chapter-8"><a href="#Chapter-8" class="headerlink" title="Chapter 8"></a>Chapter 8</h2><p>#入侵检测：算法<br>#数字取证：工具的使用+原理的介绍（算法比较少）<br>数字取证&amp;实时数据收集<br>一、数字取证：法医学分支，在数字设备中发现、恢复、调查材料，通常与计算机犯罪有关。<br>目的：1.执法：是否有犯罪证据；2.应急响应：是否存在恶意软件<br>例如：1.电子邮件是否真正发送；2.两个程序是否相同；3.员工是否盗取IP；4.手机里是否有犯罪证据；5.黑客怎样侵入系统<br>取证流程：1.数据收集；2.数据分析；3.数据报告<br>二、实时数据收集：（会有干扰-尽量在命令行、自动化的脚本上做，最小化影响）时间日期、操作系统、网络、用户行为<br>     windows    linux<br>当前时间和日期    date，time    date<br>操作系统的信息<br>1(OS information,hardware information,uptime)    systeminfo    OS:cat/etc/issue<br>Kernel: uname -a<br>cat /proc/cpuinfo<br>cat /proc/meminfo<br>uptime（已经开机运行多久）<br>操作系统的信息2(有几个硬盘，有几个分区disk information)    diskext64    看盘：fdisk -l<br>看分区：df -h<br>操作系统的信息3(OS下安装软件的信息softwares）    wmic /output:1.txt product get name,version    (非centOS)dpkg –get-selections<br>操作系统的信息4(周期运行的东西Record scheduled tasks）    schtask.exe    crontab -l<br>ls -l /etc/cron*<br>操作系统的信息5(服务Daemon Services）    autorunsc64.exe    service –status-all<br>操作系统的信息6(Drivers)    autorunsc64.exe    lsmod<br>操作系统的信息7(用户和组user  and group)    net user<br>net group    密码哈希：cat /etc/shadow<br>用户名、组和它的权限：cat /etc/passwd<br>network网络信息1（information of nic[物理层，几块网卡]）    ipconfig /all<br>ip就是ip协议栈的意思，windows参数一般用/，linux用-    ifconfig -a<br>if是interface，接口的意思<br>network网络信息2（information of routing【路由】）    route print    netstat -rn<br>-r:路由<br>-n：不做解析（不看解析出的域名/服务）<br>network网络信息3（information of connection）    netstat -anb<br>a:所有<br>n：不做解析<br>b：binary（哪个进程与这个关联,也可能看到的是服务）    netstat -anp<br>a:所有<br>n：不做解析<br>p:process（哪个进程与这个关联）<br>network网络信息4（information of arp）【arp攻击的时候用】<br>查攻击跳板，有谁连接过我    arp -a    arp -a<br>network网络信息5（information of dns cache）dns缓存，看查了什么域名    ipconfig /displaydns    无<br>用户行为1（information of open file handlers）句柄<br>所有进程对于文件操作的信息（进程在读写哪些文件）    handlers.exe(可能是handle64.exe)    lsof<br>用户行为2（information of processes)<br>当前正在运行的进程）     pslist.exe    ps auxwwem<br>ww:宽字符显示<br>e:环境变量<br>m:线程<br>用户行为3（information of cmd history）    无    vi /root/.bash_history<br>或vi /home/xxx/.bash_history</p>
+<p>三、实验样例：<br>时间和哈希在取证中非常重要。</p>
+<h2 id="Chapter-9"><a href="#Chapter-9" class="headerlink" title="Chapter 9"></a>Chapter 9</h2><p>How to Find Tetx information in Files：<br>strings:列出所有人可读的字符串（对于二进制文本文件很有用，对于纯文本没啥用），命令： strings ls | more<br>（pattern）不知道什么位置：grep：在文件的内容中做搜索，命令：grep libselinux <em>，也可以用grep passwd * –exclude-dir=</em><br>（pattern）不知道什么位置：find：在文件的名字中做搜索find . -type f -name “<em>pass</em>“<br>二进制编码<br>Base64（可逆）编码<br>……</p>
+<p>本章基本上就是三个内容的实验：</p>
+<p>1.藏在文件的末尾，简单粗暴，用strings hiddeninfo.png</p>
+<p>2.通过颜色来掺和</p>
+<p>3.频域-水印，图片对图片（工具不同，需要用好一点的工具）</p>
+<p>实验很好玩，不过隐写而已。</p>
+<h2 id="Chapter-10"><a href="#Chapter-10" class="headerlink" title="Chapter 10"></a>Chapter 10</h2><h3 id="A-windows系统"><a href="#A-windows系统" class="headerlink" title="-A windows系统"></a>-A windows系统</h3><p><strong>一、工具收集</strong></p>
+<p>上节课：手动收集</p>
+<p>这节课：工具收集</p>
+<p>Redline（Fireeye）</p>
+<ul>
+<li>Collector</li>
+<li>Analyzer</li>
+</ul>
+<p>最小需收集</p>
+<p>最全面的收集</p>
+<p>自定义目标</p>
+<p>注：live data只会收集关键信息，全面1T-2T的用Mirror</p>
+<p><strong>二、系统中的数字时间（时戳）——无处不在</strong><br>哪里有：<br>•    文件系统中的访问时间、创建时间、修改时间（MAC)windows系统下叫MACE<br>•    log文件里也有<br>•    数据库里也有<br>如何用：<br>•    时间是否准确（NTP）<br>•    时区是哪里（GMT:格林威治）（CST:中国时区）<br>修改时间：<br>•    用户手动改——517、520<br>•    应用改——防病毒软件扫描、软件做索引</p>
+<p>#现在基本上不用FAT，用NTFS<br>•    位置是0×50；<br>•    MACE里会有四个时间：Modify，Access，Create，Entry<br>①Modify：系统调用-内容最后修改时间<br>②Access最后访问时间<br>③Create创建的时间<br>④Entry：MFT表的最后修改时间（文件没改，MFT表可能修改，因为没有修改文件内容，但是可能修改了文件属性，如权限、访问控制）<br>格式都是WINDOWS Filetime<br> Create Time、Modify Time、Access Time的更新条件：<br> 一些文件相关时间的“破案”推断：<br>#若修改时间=创建时间，则不是拷贝过来的，就是原始新建的文件<br>#若修改时间早于创建时间，则是拷贝出来的或移动过来的<br>#若很多文件有很多相近访问时间，则它们被反病毒软件批量扫描过<br>#若很多多媒体文件（照片、视频）有很多相近访问时间，则它们被同一个预览的软件访问过<br>#若很多文件修改时间=创建时间，且创建时间相近，则它们可能是被从网络上批量下载下来的<br> #若event6005，那么系统开启；event6006，那么系统关闭。（开关机的时间）<br>#用户登录时：注册表：HKLM\SAM\SAM\Domains\account\Users\Names\用户RID\F<br>二进制形式存储了最后登录时间、密码设定时间、账户超时时间、最后一次失败登录（密码输错）时间，可用DCode软件解析</p>
+<p><strong>三、Windows系统中的重要文件和目录</strong><br>•    重要文件和目录<br>a.    系统实时行为信息<br>Windows Prefetch：（winXP,WIN10）记住你运行过的信息，以便以后更加快速地运行（.pf）——用于：找犯罪资料时找他常用的软件；如果是恶意软件，它关联的应用有哪些<br>SWAP file：存在于C盘根目录下的系统文件。内存不够程序运行时不会崩溃，而是被它换出，拷贝到硬盘<br>Hibernation file：存在于C盘根目录下的系统文件。系统在休眠的状态下关机，它是对物理内存完全的镜像<br>b.    用户个人信息：User Directory<br>windows9x：None<br>windowsNT：WNNT/Profiles<br>windowsXP:Documents and Settings\用户名<br>windows Vista/7/8/10/2013:Users</p>
+<p>c.    用户行为</p>
+<p>i.    最后访问位置（最近访问的文档）<br>\Users\用户名\AppData\Roaming\Microsoft\Windows\Recent<br>ii.    我的文档（My Documents)<br>iii.    SendTo:用户最常存放文件的目录<br>\Users\Administrator\Appdata\Roaming\Microsoft\Windows\SendTo</p>
+<p>•    注册表（结构化的很多二进制文件），在近期用数据库实现。<br>a.    regedit.exe<br>b.    存储硬件、软件、用户、行为、系统状态<br>c.    注册表为树形结构：<br>5个root key（5个根节点）：HKLM（真的根节点）、HKU（真的根节点）、HKCR（只是索引）、HKCU（只是索引）、HKCC（只是索引）</p>
+<p>H是Handler的意思，注册表也是个handler。</p>
+<p>举例：MRU(Most Recent Used Files，存放在注册表HKCU里，可能会泄露)<br>          Mounted Devices：所有加载的设备的信息<br>•    删除的文件<br>回收站（就是个文件夹），到回收站的文件会分成两个文件<br>$I<RandomID>.ext:被删除文件的信息文件（大小，时间， 全路径）<br>$R<RandomID>.ext：存放被删除文件的初始内容，万一要恢复要用到 </p>
+<p><strong>四、Windows下的浏览器</strong></p>
+<p>​       重要的数据：浏览历史、缓存、cookie、个人喜好、下载记录<br>举例说明：<br>Firefox浏览器：<br>所有的信息文件放在/Users/用户名/AppData/Roaming/Mozillar/Firefox/Profile这个Data Directory里。Firefox使用SQLite数据库，有api就可以读写。<br> cache文件没有用数据库的形式，用哈希值存在以下目录中：</p>
+<h3 id="B-linux系统"><a href="#B-linux系统" class="headerlink" title="-B linux系统"></a>-B linux系统</h3><p><strong>一、linux系统中的时间戳</strong><br>MAC time：命令-stat filename<br>#Modify是文件内容的修改<br>#change是文件属性（inode）的修改<br>#Access是读文件上次访问的时间<br>命令-touch：可修改 last access time\modify time<br>用户登录时间：命令-last -f /var/log/wtmp<br>        last -f /var/log/wtemp.1<br>Kernel Timeline: dmesg -time-format ctime<br>                              Machine power on time<br> <strong>二、Linux文件系统的结构</strong><br>文件系统架构标注FHS（定义意图和必须有的内容）</p>
+<p>/root：引导、恢复、修复……系统，包括</p>
+<p>/usr：共享、只读第二主文件系统：</p>
+<p>/var : 专门给你写东西用的，包括</p>
+<p>#辨析：</p>
+<ol>
+<li>   /bin:所有用户用的命令，如ls,ifconfig【一旦被恶意修改，连看文件都看不了】</li>
+<li>   /sbin：系统管理</li>
+<li>   /usr/bin：许多用户命令，包括应用的二进制文件</li>
+<li>   /usr/sbin：不是根本的系统修复需要的二进制</li>
+<li>   /usr/local/bin：本地装的软件，软件更新之类的，自己编译的（而不是apt安装跟着自己系统来的）<br>特别重要的：<br>/etc文件下：linux系统下的配置文件，不会放在github上，因为这个跟自己local的东西息息相关</li>
+</ol>
+<p>/var：所有可以实际写东西的地方</p>
+<p><strong>三、linux服务的重要数据</strong><br>· web<br>· database<br>· dns<br>· ntp</p>
+<h2 id="Chapter11"><a href="#Chapter11" class="headerlink" title="Chapter11"></a>Chapter11</h2><p>一、怎样创建或收集一个内存映像文件<br>在内存中找什么文本信息？</p>
+<ol>
+<li>   内存中有两个大的东西，一个是用户进程内核kernel，一个是process。process里面，又有进程的活动、进程产生的文件、网络的活动等等。</li>
+<li>   物理内存被映射成虚拟内存，我们需要物理内存里的东西。硬盘中，crash dump files、pagefile（swap）、hibernation file也需要。<br>怎样用软件工具收集？</li>
+<li>   Windows：FTKImager、Memoryze</li>
+<li>   Linux：LiME<br>二、用工具来分析内存映像文件<br>软件：volatility（开源）<br>一些命令。</li>
+</ol>
+<h2 id="Chapter12"><a href="#Chapter12" class="headerlink" title="Chapter12"></a>Chapter12</h2><p>注：11和12章都是比较重要的，但是在线上都没有进行过多整理。</p>
+<p>11章大多是命令，只要熟悉分析流程时使用的各命令及含义就可，考了大题。</p>
+<p>12章主要就是（winhex里）对于NTFS等文件的手动分析，比如哪个段到哪个段固定什么位，表示什么，考了大题。</p>
+<h2 id="另附总结的课堂题目："><a href="#另附总结的课堂题目：" class="headerlink" title="另附总结的课堂题目："></a>另附总结的课堂题目：</h2><p>1.某IDS观测到了10,0000events（其中500个是入侵事件），IDS共发出4500 alarms(其中450个是正确的警报，剩下的是误报)，请问该IDS的检测率是；误报率是。<br>答：检测率=450/500=0.90，误报率=（4500-450）/（100000-500）=0.04<br>2.上题中，在检测率不变的情况下，如果希望IDS发出的警报90%是正确的警报，那么误报率最高是。<br>答：检测率不变则正确警报450个，入侵事件500个，总警报450÷90%=500个。那么得出误报=500-450=50个，误报率=50/（100000-500）=0.0005<br>3.下列镜像流量的方式，哪种是在操作系统内部镜像<br>A. Port Mirror     B.Beam Splitter     C.BPF     D.SDN Switch<br>答：BPF是操作系统里面，单机做数据检查；Port Mirror是硬件方法；Beam Splitter 是硬件方法；SDN Switch 是硬件方法。故选（C）。<br>4.下面哪种流量镜像方式不会影响交换机的性能？<br>A.Beam Splitter B.Port Mirror C.DMA<br>答：硬件方法2：Beam Splitter是物理上分，而不是消耗交换机资源去复制报文，所以不会影响性能；硬件方法1：Port Mirror 是消耗交换机资源的；DMA无关。故选(A)。<br>5.下列哪种报文技术，跳过了内核协议栈，将报文在用户态处理？<br>A. DMA     B.DPDK     C.EDP<br>答：DMA不经过CPU干预，DPDK把所有东西都放到用户态去做，绕过了协议栈，坏处是绕出了又没有实现协议栈，所有的通信都不能做了；EDP要在kernel做的。故选择（B）。<br>6.在Snort中，如果想忽视来自某个地址的某种类型的事件，应该使用（）<br>A. event filtering    B.rate filtering     C.event suppressing<br>答：event filtering：数量减少；rate filtering：限制过多的报告；event suppressing：强制忽视某个地址某种类型的事件，故选C<br>7.Snort中，进行端口扫描检测的预处理器是<br>A.sfPortscan    B.flow     C.stream     D.http<br>答：sfportscan（基于端口的统计来做基于源|宿端口检测）,所以选择A。<br>8.Suricata为了提高处理性能，在CPU的亲和性配置中，将CPU划为哪几个集合_<br>A. management     B.worker     C.sender     D.receive<br>答：CPU亲和性的限制有management、receive、worker三种cpu set。故选ABD。<br>9.Snort和Suricata都会使用fast_pattern加速匹配过程，fast_pattern是将规则中的多个content选项拼成一个以提高匹配效率_<br>答：错。它们确实都会使用fast_pattern，但是fast_pattern是最重要、最先进行分类的一个content，而不是多个content拼凑。<br>10.请使用Zeek脚本完成如下功能，每次一个新的connection建立时，使用print打印出orig一方的port。<br>答：event new_connection(c:connection) { print c$id$orig_p; }<br>11.如果我们监控系统的CPU使用率等状态，判断是否需要对检测模块检测到的non-self对象进行处理，这是利用了以下哪一种技术_<br>A. Negative Selection     B.Clone Selection     C.Danger Theory<br>答：负向选择（知道了正确答案，那么没听说过的全是错误答案）；克隆选择（增强版负向选择，效率更高，检测率更高，同时能适应对手变化）；危险理论（我和非我，并不是所有的外来物都对系统有伤害，所以没必要产生反应）<br>由于提到非我，所以选择C<br>12.Snort的规则中flow和flowbits这两个规则选项，是由哪一个预处理器提供支持的？<br>A.frag3<br>B.session<br>C.stream<br>D.reputation<br>答：session（为每个流建立上下文结构，如flow、flowbits），所以选择B。<br>13.下列关于Snort预处理器说法正确的是<br>A.预处理器只对报文进行重组和解码，不会发出警报<br>B.在预处理报文时，reputation处理器排在所有其他预处理器之前<br>C.用户不能自行添加新的预处理器模块到Snort<br>答：由题14，预处理器可以发出警报。用户可以自行添加新的预处理器模块，灵活调用。reputation预处理器处理的是rule里面的比对IP，排在所有预处理器前面。<br>14.Fragment packet ends after defragmented packet 这个警报消息是下面哪个预处理器产生的警报？<br>A.frag3<br>B.session<br>C.stream5<br>D.http<br>答：frag3（做ip层的重组，比如ip报文分片放到了不同报文里去混淆，也能被匹配中），由题意，是跟分片有关，所以选A。<br>15.HTTP RESPONSE GZIP DECOMPRESSION FAILED是由哪个预处理器产生的警报？<br>A.stream5<br>B.sfportscan<br>C.http<br>D.frag3<br>答：题中有HTTP字样，选http预处理器。<br>16.维护Suricata的组织是<br>A.OSI<br>B.OISF<br>C.OASIS<br>D.EFF<br>答：OISF基金会（open information security foundation），非盈利组织。故选B。<br>17.Suricata的事件系统可以将以下哪些数据以JSON格式输出<br>A.Suricata发出的警报信息<br>B.Suricata运行中的统计数据<br>C.Suricata解析后的HTTP、DNS等协议的数据<br>答：和Snort不同，Suricata不仅输出结果，中间这些东西也会输出，可以再去分析。events:alerts、anomalies、metadata、file info、protocol specific records等<br>都可以用json形式发给file、unix_socket、redis、syslog，故选ABC。<br>18.Suricata支持通过内容来进行协议的自动识别，从课件中的例子来看，下面说法正确的是<br>A.Suricata可以自动识别SMTP、HTTP等多种协议<br>B.Suricata对协议的识别率是100%<br>C.Suricata可以识别所有版本的HTTP协议<br>答：选择A。B、C均未实现。<br>19.Suricata可以通过lua语言扩展自己的能力，下列说法正确的是<br>A.lua脚本可以用于Suricata的协议识别、输出和检测<br>B.lua脚本在进行规则检测时，可以检测各种类型的协议字段<br>C.lua脚本需要通过init和match两个函数完成检测功能的实现<br>答：lua脚本在输出和检测时可以用，识别时不能；各种自然也不对；lua脚本确实需要init和match function，所以选择C项。<br>20.关于Zeek中的编程语句格式说法正确的是<br>A.Zeek脚本和Python一样要求严格缩进<br>B.Zeek脚本中，变量声明、赋值和打印这样的语句都要以；结尾<br>C.Zeek脚本需要有main函数作为程序入口<br>答：Zeek是用大括号括起来的，所以不要缩进；分号结尾保留了C的风格；main函数不需要，因为切入点是event，故选B。<br>21.Zeek中表示字典类型的数据结构是___<br>A.Vector     B.Dict     C.Table<br>答：table：字典；set：集合；vector：数组；record：类，故选C。<br>22.可以在http_request()函数中获取到HTTP的头部字段数据。<br>答：http_request（解析语义结构，发现是http协议请求），而进行到http_header才会拿到header啥的，所以错误。<br>23.Zeek中的event函数如zeek_init,http_request在所有脚本中只能出现一次。<br>答：不是，一个事件结束就可以进行另一个事件。错误。<br>24.Sumstats模块主要用于对观测到的流量数据进行摘要统计，可以进行的统计类型包括： </p>
+<p>25.在CVE-2017-5638_struts的检测程序中，没有使用到Zeek产生的下列哪个消息</p>
+<p>答：一共用到了4个event：http_header;dns_request;http_message_done;file_state_remove<br>26.如下程序的输出是<br>function emphasize(s:string,p:string&amp;default=”*”):string<br>{return s+p+s;}<br>event zeek_init()<br>{print(“star”,”_”)}<br>A.<em>star</em><br>B.star_star<br>C.<em>star</em><br>答：star_star，故选择B<br>27.<br>if(c$id$orig_h in local_subnets)<br>{print c$id$orig_p;}<br>else<br>{print c$id$resp_p;}</p>
+<p>当上面的程序遇到一个UDP流，客户端地址为192.168.2.4，端口为58998，服务器地址为1.1.1.1，端口为53，该程序的输出是<br>A.58998<br>B.53<br>C.53/udp<br>D.58998/udp<br>答：origin:源，（即客户端）；response：响应（即服务器），本题客户端地址显然不在本地集合内，所以进第二个else，所以是C。<br>28.HTTP响应码是哪一种数据类型<br>A. Categorical<br>B.Binary<br>C.Ordinal<br>D.Numeric<br>答：类别数据（Category）：HTTP Request type ，选A<br>29.IP报文长度是哪一种数据类型<br>A. Categorical<br>B.Binary<br>C.Ordinal<br>D.Numeric<br>答：长度，什么长度都有可能，数值类型，选D。<br>30.一个数据用于标示一个流是否加密，这个数据的类型是<br>A. Categorical<br>B.Binary<br>C.Ordinal<br>D.Numeric<br>答：二元组（Binary）：True/False（land，专门表示是否加密），所以选B<br>31.IPv6协议的Traffic Class字段是什么数据类型<br>A. Categorical<br>B.Binary<br>C.Ordinal<br>D.Numeric<br>答：首先要知道IPv6协议的Traffic Class字段是跟IPv4的tos字段作用差不多——通信分类（Traffic Class）字段用来标识对应IPv6的通信流类别，或者说是优先级别，占8位，类似于IPv4中的ToS（服务类型）字段。而序数（Ordinal）：自然数，作差是没意义的，比如IPv4的tos字段和IPv6的traffic class字段，比如优先级，1-100，所以选择C。<br>32.关于机器学习在入侵检测中的应用，下列说法正确的是：<br>A.机器学习的方法机器学习的方法在实际应用中的效果好于基于规则的方法<br>B.机器学习的方法的误报和可解释性是机器学习方法应用于入侵检测技术中的难点<br>C.机器学习的方法只能发现已知类别的攻击<br>答：基于机器学习的入侵检测有很多问题缺点，如检测的语义无法解释，调查处理成本很高，基于统计的规则很差，而且一直得不到解释，所以B正确；实际上，基于规则的结果很好，基于统计的规则很差，而且一直得不到解释，所以A错误。C项是可以发现的，但是得不到解释。<br>33.以下可以作为机器学习入侵检测方法的检测对象的是<br>A.网络流量的流记录<br>B.应用程序的操作系统调用序列<br>C.用户的登录时间、地点<br>D.用户的打印机使用时间和打印张数<br>E.应用程序的二进制文件<br>答：“数据包、系统调用、行为”等数据类型都可以用来做机器学习<br>34.Linux下采集路由信息的命令是<br>A.route print<br>B.netstat -rn<br>C.ifconfig -a<br>答：选择B，netstat -rn<br>参数-r:路由<br>参数-n：不做解析（不看解析出的域名/服务）<br>35.Windows下获取dns缓存表的命令是<br>A.ifconfig /displaydns<br>B.ipconfig /displaydns<br>C.arp -a<br>答：ipconfig /displaydns，故选B<br>36.Linux下获得进程列表的命令是<br>A.ps    B.lsof    C.pslist<br>答：ps auxwwem，所以选择A<br>参数ww:宽字符显示<br>参数e:环境变量<br>参数m:线程<br>37.Windows下获取系统用户列表的命令是_<br>A. cat/etc/passwd<br>B.systeminfo<br>C.net user<br>答：操作系统的信息7(用户和组user and group) net user或net group 选C。<br>38.Linux下获取系统打开文件句柄的命令是_<br>A.handlers<br>B.lsof<br>C.lsmod<br>答：用户行为1（information of open file handlers）句柄 lsof所以选择B。<br>39.Windows下和Linux的Date命令输出数据是一样的_<br>答：错误，windows输入date+time=linux输入date<br>40.关于netstat -anb命令说法正确的是<br>A.这是Linux下的netstat命令<br>B.这是Windows下的netstat命令<br>C.这个命令可以显示出进程和监听的网络端口之间的关系<br>D.这个命令可以显示系统正在使用socket端口以及Unix Socket端口<br>答；Windows下的netstat -anb：<br>参数a:所有<br>参数n：不做解析<br>参数b：binary（哪个进程与这个关联,也可能看到的是服务）<br>所以选B和C。<br>41.进行live data collection时，下列说法正确的是<br>A.采集数据应该写在被采集的硬盘上，然后拷走<br>B.采集数据应该写在U盘或者移动硬盘上<br>C.采集程序的命令应该尽量使用系统自带的命令<br>D.采集程序应该单独准备一个U盘，尽量不使用被采集系统自带的命令<br>答：live data collection需遵循不破坏现场的原则。故选择BD。<br>42.只要用户不主动访问文件，文件的最后访问时间就不会改变<br>答：错误，因为文件可能会定时更新，或被同一个软件预览等。<br>43.NTFS下每个文件关联有4个时间，他们是<br>A.最后修改时间<br>B.最后访问时间<br>C.创建时间<br>D.MFT表项修改时间<br>E.最初访问时间<br>F.访问权限修改时间<br>答：<br>①Modify：系统调用-内容最后修改时间<br>②Access最后访问时间<br>③Create创建的时间<br>④Entry：MFT表的最后修改时间<br>所以选择ABCD。<br>44.关于文件相关的时间，下列说法正确的是<br>A.一个文件的创建时间一定比访问时间和修改时间早<br>B.一个文件的修改时间不可能比创建时间早<br>C.一个文件的创建时间可能比修改时间要晚<br>答：拷贝出来的或移动过来的文件修改时间早于创建时间，所以选择C。<br>45.Windows操作系统的注册表物理上是一个文件。_<br>答：错误，注册表（结构化的很多二进制文件），在近期用数据库实现，所以不是一个文件。<br>46.Windows注册表里的5个根键，只有两个是真的根键，其他的是子键的索引，这两个真的根键是<br>A.HKLM,HKCC<br>B.HKLM,HKU<br>C.HKCU,HKCR<br>D.HKU,HKCC<br>答：5个root key（5个根节点）：HKLM（真的根节点）、HKU（真的根节点）、HKCR（只是索引）、HKCU（只是索引）、HKCC（只是索引），所以选择B。<br>47.当Windows把一个文件放入回收站时，下列说法正确的是<br>A.这个文件已经被物理删除，不可恢复<br>B.这个文件的元信息和文件内容被分别存放在回收站的两个文件中<br>C.这个文件的文件名被回收站记录下来，但是原始保存路径不可恢复<br>答：删除的文件进入回收站（就是个文件夹），到回收站的文件会分成两个文件<br>$I<RandomID>.ext:被删除文件的信息文件（大小，时间， 全路径）<br>$R<RandomID>.ext：存放被删除文件的初始内容，万一要恢复要用到<br>所以选择B项。<br>48.关于FireFox浏览器的说法正确的是<br>A.Firefox的所有Web浏览数据，包括浏览历史，缓存、Cookie、表单等都存放在sqlite数据库中<br>B.Firefox的浏览历史信息和Cookie信息放在同一个sqlite数据库文件中<br>C.Firefox的Cookie放在cookies.sqlite文件中<br>答：缓存cache没有存放在sqlite数据库中，它用哈希值存在一个目录中。浏览历史、Cookie放在不同sqlite中，分别是places.sqlite和cookies.cqlite。所以选择C。</p>
+<p>另附所有Github上提交的作业代码：</p>
+<p>Idshwk1:<br>alert tcp any any -&gt; any 8080 (flags: A; content: “I am IDS Homework I”; offset: 99; depth: 101; msg: “TEST ALERT”; sid: 1000001)<br>Idshwk2:<br>alert tcp any any -&gt; any 3399 (pcre:”/login|Initial/“; flowbits:set,flag; flowbits:noalert; sid:1000002)alert tcp any any -&gt; any 3399 (msg:”bot founded”; flowbits:isset,flag; pcre:”/((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}:(6[0-5]{2}[0-3][0-5]|[1-5]\d{4}|[1-9]\d{1,3}|[0-9])/“; sid:1000001;)</p>
+<p>Idshwk3:<br>global cntTable :table[addr] of int = table();<br>    global ipTable :table[addr] of set[string] = table();<br>    event http_reply(c: connection, version: string, code: count, reason: string){<br>        local ua :string = c$http$user_agent;<br>        local ip :addr = c$id$orig_h;<br>        if (ip in ipTable){<br>            if(ua !in ipTable[ip]){<br>                add (ipTable[ip])[ua];<br>                cntTable[ip] += 1;<br>            }<br>        }<br>        else{<br>            ipTable[ip] = set(ua);<br>            cntTable[ip] = 1;<br>        }<br>    }</p>
+<pre><code>event zeek_done()
+&#123;
+    for(ip,cnt in cntTable)
+    &#123;
+        if(cnt &gt;= 3)
+        &#123;
+            print(fmt(&quot;%s is a proxy&quot;, ip));
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>Idshwk4:<br>event http_reply(c: connection, version: string, code: count, reason: string)<br>    {<br>        if(code == 404)<br>        {<br>            SumStats::observe(“http_response_404”,<br>              SumStats::Key($host = c$id$orig_h),<br>              SumStats::Observation($str=c$http$uri));<br>        }</p>
+<pre><code>    SumStats::observe(&quot;http_response&quot;, 
+      SumStats::Key($host = c$id$orig_h), 
+      SumStats::Observation($str=c$http$uri));
+
+
+&#125;
+
+
+event zeek_init()
+&#123;
+
+
+    local reducer1 = SumStats::Reducer($stream=&quot;http_response_404&quot;, 
+                                 $apply=set(SumStats::SUM, SumStats::UNIQUE));
+    local reducer2 = SumStats::Reducer($stream=&quot;http_response&quot;, 
+                             $apply=set(SumStats::SUM));
+                                 
+    SumStats::create([$name = &quot;find_scaner&quot;,
+                        $epoch = 10min,
+                        $reducers = set(reducer1, reducer2),
+                        $epoch_result(ts: time, key: SumStats::Key, result: SumStats::Result) =
+                        &#123;
+                        local r1 = result[&quot;http_response_404&quot;];
+                        local r2 = result[&quot;http_response&quot;];
+                        if(r1$sum &gt; 2 &amp;&amp; (r1$unique / r1$sum) &gt; 0.5 &amp;&amp; (r1$sum / r2$sum) &gt; 0.2)
+                        print fmt(&quot;%s is a scanner with %d scan attemps on %d urls&quot;, 
+                                    key$host, r1$sum, r1$unique);
+                        &#125;]);
+&#125;
+</code></pre>
+<p>Idshwk5:<br>from sklearn.ensemble import RandomForestClassifier<br>    import math<br>    import numpy as np<br>    class dns_info:<br>        def <strong>init</strong>(self, _name, _is_dga = ‘’):<br>            self.name = _name<br>            if _is_dga == ‘dga’:<br>                self.is_dga = 1<br>            else:<br>                self.is_dga = 0<br>            self.length = len(_name)<br>            self.digit_cnt = 0<br>            self.letter_cnt = 0<br>            self.entropy = 0<br>            # self.segmentation = 0<br>            self.<strong>statistic</strong>()</p>
+<pre><code>    def __statistic__(self):
+        char_set = &#123;x: self.name.count(x) for x in self.name&#125;
+        char_count = sum(char_set.values())
+        for k, v in char_set.items():
+            if k.isdigit():
+                self.digit_cnt += v # numbers in domain name
+            if k.isalpha():
+                self.letter_cnt += v # letters in domain name
+            prob = v / char_count
+            self.entropy -= prob * math.log2(prob) # entropy = sum[-p*log(p)]
+
+
+    def return_value(self):
+        return [self.name, self.length, self.digit_cnt, self.letter_cnt, self.entropy]
+
+
+def read_and_preprocess_training_data(path):
+    data = []
+    tags = []
+    with open(path, &#39;r&#39;) as f:
+        for line in f.readlines():
+            name, tag = line.strip().split(&#39;,&#39;)
+            dns_obj = dns_info(name, tag)
+            data.append(dns_obj.return_value()[1:]) # get the statistic results of the dns name
+            tags.append(dns_obj.is_dga)
+    return np.array(data), np.array(tags)
+
+
+def read_and_preprocess_test_data(path):
+    raw_data = []
+    orig_domain = []
+    with open(path, &#39;r&#39;) as f:
+        for line in f.readlines():
+            orig_domain.append(line.strip())
+            dns_obj = dns_info(line)
+            raw_data.append(dns_obj.return_value()[1:]) # get the statistic results of the dns name
+    return np.array(raw_data), orig_domain
+
+
+def training(data, tags):
+    clf = RandomForestClassifier(random_state = 0)
+    clf.fit(data, tags)
+    return clf
+
+
+def predicting(clf, raw_data):
+    results = clf.predict(raw_data)
+    return results
+
+
+if __name__ == &#39;__main__&#39;:
+    data, tags = read_and_preprocess_training_data(&#39;train.txt&#39;)
+    clf = training(data, tags)
+    raw_data, orig_domain = read_and_preprocess_test_data(&#39;test.txt&#39;)
+    results = predicting(clf, raw_data)
+    with open(&quot;result.txt&quot;, &#39;w&#39;) as f_w:
+        for i in range(len(orig_domain)):
+            if results[i] == 0:
+                f_w.write(&quot;&#123;&#125;,notdga\n&quot;.format(orig_domain[i]))
+            else:
+                f_w.write(&quot;&#123;&#125;,dga\n&quot;.format(orig_domain[i]))
+</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本学期的课程基本全部结束，本科阶段的课程也已经接近尾声。</p>
+<p>如果学弟学妹能看到这个博客，可以拿来当上课笔记，自己最好看看代码，要考的&amp;&amp;要考很多；除了在里面说明未整理的章节，其余章节基本比较齐全，但是由于直接从笔记本上复制下来，格式没有注意，图片可能也有所纰漏，所以很多地方肯定有些问题……内容有些地方简写or因为格式问题错漏自己整理整理就好，除了可能反馈比较明显误导的地方，大体不会更了。也欢迎补充  qwq    …</p>
+<p>顺便：祝自己今天20岁生日快乐  ++  超喜欢yw老师！</p>
+	
 		</div>
 		
 		<div id="current-post-cover" data-scr="/img/cart_cover.jpg"></div>
@@ -301,10 +640,6 @@
 					
 	<span>
 		<a id="totop-post-page">返回顶部</a>
-		
-			<a href="/2021/06/12/Time-0/" title="" rel="prev">
-				&laquo;上一篇
-			</a>
 		
 		
 			<a href="/2021/05/31/hello-world-0/" title="将拭旧褐，朅来虚汾" rel="next">
@@ -328,28 +663,6 @@
 			
 					<li>
 						<div class="relate-post-text">
-							<a class="relate-post-title" href="/2021/06/12/Time-0/" title="">
-											
-							</a>
-							<p class="relate-post-date">
-								<i class="fa fa-calendar"></i>
-								六月 12日, 2021				
-							</p>
-							<p class="relate-post-content">
-								title
-							</p>
-						</div>
-
-						<div class="relate-post-cover">
-							<a href="/2021/06/12/Time-0/" title="">				
-								
-								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt=""/>
-							</a>
-						</div>
-					</li>												
-			
-					<li>
-						<div class="relate-post-text">
 							<a class="relate-post-title" href="/2021/05/31/hello-world-0/" title="将拭旧褐，朅来虚汾">
 								将拭旧褐，朅来虚汾			
 							</a>
@@ -358,7 +671,11 @@
 								五月 31日, 2021				
 							</p>
 							<p class="relate-post-content">
-								
+								– 捣鼓一番博客，为自己20周岁生日献礼。
+– 2021.6.28
+【轰轰烈烈不如平静】
+曾经的我挂了几年“绝不平庸”的名号，想来为之振奋的时刻也不少。
+最近偶然听到一首歌，这次听感觉不太一样。一句歌词让我感触颇多——轰轰烈烈不如平静...
 							</p>
 						</div>
 
